@@ -1,0 +1,104 @@
+﻿@model UsingRepository.Core.ViewModels.ProductViewModel
+
+
+@{
+    ViewBag.Title = "Cart";
+    Layout = "~/Views/Shared/_SecondLayout.cshtml";
+}
+
+
+            <h4 class="title">
+                <span class="text"><strong>Your</strong> Cart</span>
+            </h4>
+            @if (Model.CartViewModels == null)
+            {
+                <h2>Your Cart Is Empty ,Select Some Products</h2>
+                <br />
+                @Html.ActionLink("Go To Products", "AllProducts", "Products", null, new { @class = "btn btn-Black" })
+            }
+            else
+            {
+                <table id="cart" class="table table-striped table-responsive">
+                    <thead>
+                        <tr>
+                            <th>Remove</th>
+                            <th>Image</th>
+                            <th>Product</th>
+                            <th>Quantity</th>
+                            <th>Price</th>
+                            <th>Total</th>
+                        </tr>
+                    </thead>
+                    <tbody id="cart2">
+                        @{
+
+                            var total = 0.0m;
+
+                            foreach (var item in Model.CartViewModels)
+                            {
+                                <tr>
+                                    <td>
+                                        <input type="checkbox" name="chkCartRemove" value="@item.ProductId">
+                                    </td>
+                                    <td>
+                                        <a href="@Url.Action("Details", "Products", new {id = item.ProductId})">
+                                            <img style="width: 150px;height: 150px" class="img-responsive" alt="" src="@Url.Content(item.ImagePath)">
+                                        </a>
+                                    </td>
+                                    <td>@item.Name</td>
+                                    <td>
+                                        <input type="number" name="quantity" value="@item.Quantity" style="width: 80px;" class="input-sm">
+                                    </td>
+                                    <td>$@item.Price</td>
+                                    <td>$@item.Total</td>
+                                </tr>
+                                total += item.Total;
+                            }
+                            <tr>
+                                <td>&nbsp;</td>
+                                <td>&nbsp;</td>
+                                <td>&nbsp;</td>
+                                <td>&nbsp;</td>
+                                <td>&nbsp;</td>
+                                <td>
+                                    <strong>$@total</strong>
+                                </td>
+                            </tr>
+                        }
+                    </tbody>
+
+                </table>
+@*                 <h4>What would you like to do next?</h4> *@
+@*                 <p>Choose if you have a discount code or reward points you want to use or would like to estimate your delivery cost.</p> *@
+@*                 <label class="radio"> *@
+@*                     <input type="radio" name="optionsRadios" id="optionsRadios1" value="option1" checked=""> *@
+@*                     Use Coupon Code *@
+@*                 </label> *@
+@*                 <label class="radio"> *@
+@*                     <input type="radio" name="optionsRadios" id="optionsRadios2" value="option2"> *@
+@*                     Estimate Shipping &amp; Taxes *@
+@*                 </label> *@
+@*                 <hr> *@
+@*                             <p class="right"> *@
+@*                                 <strong>Sub-Total</strong>: $100.00<br> *@
+@*                                 <strong>Eco Tax (-2.00)</strong>: $2.00<br> *@
+@*                                 <strong>VAT (17.5%)</strong>: $17.50<br> *@
+@*                                 <strong>Total</strong>: $119.50<br> *@
+@*                             </p> *@
+                            <hr />
+                            <p class="center">
+                                <button id="btnSubmit1" type="submit" class="btn">Update & Remove</button>
+                                @Html.ActionLink("Continue", "AllProducts", "Products", null, new { @class = "btn", style = "background-color: #DDDDDD;color: black;" })
+                                @Html.ActionLink("Checkout", "Checkout", "Cart", null, new { @class = "btn btn-Black" })
+                                @Html.ActionLink("Checkout with paypal", "PaymentWithPaypal", "Paypal", null, new { @class = "btn btn-Black" })
+                            </p>
+                            }
+@section scripts
+{
+    <script type="text/javascript">
+        $(document).ready(function() {
+            //UpdateCartFunction('/rpc/Cart/UpdateCart');
+            CartUpdateController.update();
+        });
+    </script>
+}

@@ -1,0 +1,46 @@
+﻿<!DOCTYPE html>
+
+<html>
+<head>
+    <meta name="viewport" content="width=device-width" />
+    <title>@ViewBag.Title</title>
+
+    @Styles.Render("~/Content/css")
+    @Scripts.Render("~/bundles/modernizr")
+
+    <link rel="stylesheet" href="~/Areas/Admin/css/style.css">
+</head>
+<body>
+<input type="checkbox" id="check-bar">
+<header class="header">
+    <nav class="navbar">
+        <div class="nav-left">
+            <h2><span>Admin</span>stration</h2>               
+            <label for="check-bar">
+                <i class="fas fa-bars"></i>
+            </label>
+        </div>
+        <div class="nav-right">
+            @using (Html.BeginForm("Logout","Admin",FormMethod.Post))
+            {
+                <button type="submit">Logout</button>
+            }
+            @{
+                var controller = @Url.RouteCollection.GetRouteData(Context)?.Values["controller"].ToString();
+                var action = @Url.RouteCollection.GetRouteData(Context)?.Values["action"].ToString();
+            }
+            <a href="@Url.Action(action,controller,new{area="ar"})">عربى</a>
+        </div>
+    </nav>
+</header>
+<main class="main">
+    @{ Html.RenderPartial("_sidebar");}
+    <section class="site-content">
+        @RenderBody()
+    </section>
+</main>
+@Scripts.Render("~/bundles/lib")
+@Scripts.Render("~/bundles/app")
+@RenderSection("scripts", false)
+</body>
+</html>

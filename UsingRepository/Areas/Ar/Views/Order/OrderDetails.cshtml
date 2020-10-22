@@ -1,0 +1,26 @@
+﻿@model IEnumerable<UsingRepository.Core.Models.OrderDetail>
+
+@{
+    ViewBag.Title = "title";
+}
+
+<h2 class="alert alert-warning">تفاصيل الاوردر</h2>
+<table class="table table-responsive table-hover table-bordered">
+    <thead>
+        <tr>
+            <th>الكمية</th>
+            <th>التعليق</th>
+            <th>اسم المنتج</th>
+        </tr>
+    </thead>
+    <tbody>
+      @foreach (var orderDetail in Model)
+      {
+          <tr>
+              <td>@orderDetail.Quantity</td>
+              <td>@orderDetail.Comments</td>
+              <td>@orderDetail.Product.Name</td>
+          </tr>
+      }
+    </tbody>
+</table>

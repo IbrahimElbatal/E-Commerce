@@ -1,0 +1,67 @@
+﻿@model IEnumerable<UsingRepository.Core.Models.Slider>
+
+@{
+    ViewBag.Title = "All Sliders";
+}
+
+<h2 class="alert alert-info">كل السلايدز</h2>
+
+<p>
+    @Html.ActionLink("سلايدر جديد", "Create",null,new {@class="btn btn-Black"})
+</p>
+<table id="sliderTable" class="table table-bordered table-hover table-responsive">
+    <thead>
+        <tr>
+            <th>
+                @* @Html.DisplayNameFor(model => model.ImagePath) *@
+                الصورة
+            </th>
+            <th>
+                @* @Html.DisplayNameFor(model => model.Header) *@
+                العنوان
+            </th>
+            <th>
+                @* @Html.DisplayNameFor(model => model.Paragraph) *@
+                الوصف
+            </th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var item in Model)
+        {
+            <tr>
+                <td>
+                    @{
+                        var path = Url.Content(item.ImagePath);
+                        var header = string.IsNullOrEmpty(item.Header) ? "No Header" : item.Header;
+                        var paragraph = string.IsNullOrEmpty(item.Header) ? "No Description" : item.Paragraph;
+                    }
+                    <a style="color: blue" href="@path" target="_blank">
+                        @path.Substring(@path.LastIndexOf('/')+1) 
+                    </a>
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => header)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => paragraph)
+                </td>
+                <td>
+                    @Html.ActionLink("تعديل", "Edit", new { id = item.Id },new {@class="btn btn-primary"}) |
+                    <input type="submit" value="حذف" class="btn btn-danger js-Delete" data-id="@item.Id" />
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>
+@section scripts
+{
+    <script type="text/javascript">
+        $(document).ready(function () {
+            $("#sliderTable").dataTable();
+
+            DeleteController.init('/api/Slider/');
+        });
+    </script>
+}

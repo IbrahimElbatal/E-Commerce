@@ -1,0 +1,73 @@
+﻿@model UsingRepository.Core.ViewModels.ProductViewModel
+
+@{
+    ViewBag.Title = "Details";
+}
+
+<h2 class="alert alert-info">Details Of product</h2>
+
+<div class="row">
+    <div class="col-sm-7">
+        <a href="@Url.Content(Model.ImagePath)" class="thumbnail" data-fancybox-group="group1" title="@Model.Name">
+            <img class="img-responsive" alt="" src="@Url.Content(Model.ImagePath)">
+        </a>
+        <div class="thumbnails small row">
+            @foreach (var product in Model.Products.Take(4))
+            {
+                <div class="col-xs-3">
+                    <a href="@Url.Content(product.ImagePath)" class="thumbnail" data-fancybox-group="group1" title="@product.Name">
+                        <img class="img-responsive" src="@Url.Content(product.ImagePath)" alt="">
+                    </a>
+                </div>
+            }
+        </div>
+    </div>
+    <div class="col-sm-5" style="padding-top: 50px">
+        <div class="row">
+            <div class="col-xs-12">
+                @{
+                    var total = Model.Price;
+                    var discount = ((float) (ViewBag.discount ?? 0));
+                    if (discount != 0)
+                    {
+                        total =Model.Price - (Model.Price * ((float) ViewBag.discount) / 100);
+
+                    }
+                    <address>
+                        <strong>Product Code : </strong> <span>@Model.Id</span><br>
+                        <strong>Brand : </strong> <span>@Model.Category.Name</span><br>
+                        <strong>Category : </strong> <span>@Model.Category.Name</span><br>
+                        <strong>Added Date : </strong> <span>@Model.AddedDate.Value.ToLongDateString()</span><br>
+                        <strong>Description : </strong> <span>@Html.Raw(Model.Description)</span><br>
+                        <strong>Availability : </strong> <span>@Model.NumberInStock</span><br>
+                        <strong>Discount : </strong> <span>%@discount</span><br>
+
+                    </address>
+                    <h4>
+                        <strong>Price: $@total</strong>
+
+                    </h4>
+                }
+            </div>
+
+        </div>
+    </div>
+    <div style="padding-top: 20px">
+        @Html.ActionLink("Back to List", "Index", null, new { @class = "btn btn-Black btn-lg" })
+    </div>
+
+</div>
+
+@section scripts
+{
+    <script>
+        $(document).ready(function() {
+            $('.thumbnail').fancybox({
+                openEffect: 'none',
+                closeEffect: 'none'
+            });
+            
+        });
+    </script>
+}
+

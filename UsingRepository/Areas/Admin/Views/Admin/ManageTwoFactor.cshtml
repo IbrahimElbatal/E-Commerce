@@ -1,0 +1,28 @@
+﻿@model bool
+@{
+                /**/
+
+                ViewData["Title"] = "Manage Two Factor";
+}
+
+
+<h2 class="alert alert-info">Manage Two Factor</h2>
+
+@if (Model)
+{
+    <h2>Two Factor is Enabled</h2>
+    <p>To Disable Two Factor Authentication ,please click the button bellow</p>
+    using (Html.BeginForm("DisableTwoFactorAuthentication", "Admin", FormMethod.Post))
+    {
+        <button class="btn btn-Black">Disable</button>
+    }
+}
+else
+{
+    <h2>Two Factor is Disabled</h2>
+    <p>To Enable Two Factor Authentication ,please click the button bellow</p>
+    using (Html.BeginForm("EnableTwoFactorAuthentication", "Admin", FormMethod.Post))
+    {
+        <button class="btn btn-Black">Enable</button>
+    }
+}

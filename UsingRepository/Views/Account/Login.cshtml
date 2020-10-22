@@ -1,0 +1,71 @@
+﻿   @model UsingRepository.Core.ViewModels.IdentityViewModels.LoginViewModel
+   @{
+     Layout = "";
+}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+     <meta charset="utf-8">
+     <title>Login</title>
+     <link rel="icon" type="image/x-icon" href="@Url.Content("~/favicon.png")" />
+     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+     @Styles.Render("~/Content/css")
+     @Scripts.Render("~/bundles/modernizr")
+     <link href="~/Login.css" rel="stylesheet" />
+
+  
+  </head>  
+  <body>  
+  <main>  
+      <div class="wrapper">  
+          <div class="login">  
+              <div class="log-left">  
+                  <img src="~/banner-image.png" alt="Alternate Text" />  
+              </div>  
+              <div class="log-right">
+                  <h2>Login</h2>
+
+                  @using (Html.BeginForm("Login", "Account", new { ViewBag.ReturnUrl }, FormMethod.Post, new { @class = "form-horizontal", role = "form" }))
+                  {
+                      @Html.AntiForgeryToken()
+                      @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+                      <div class="">
+                          @Html.TextBoxFor(m => m.UserName, new { placeholder = "UserName" })
+                          @Html.ValidationMessageFor(m => m.UserName, "", new { @class = "text-danger" })
+                      </div>
+                      <div class="">
+                          @Html.PasswordFor(m=>m.Password,new{placeholder="Password"})
+                          @Html.ValidationMessageFor(m => m.Password, "", new { @class = "text-danger" })
+                      </div>
+                      
+                      <div class="remember-me">
+                          @Html.CheckBoxFor(m=>m.RememberMe)
+                           <span>Remember Me</span>
+                      </div>
+                          
+                      <button type="submit">Login</button>
+                  }
+
+              </div>  
+          </div>  
+          <div class="bottom">  
+              <div>  
+                  <a href="@Url.Action("Register","Account")">Create an account</a>  
+              </div>  
+              @* <div><span>Or Login with : </span>   *@
+              @*     <i class="fab fa-facebook"></i>   *@
+              @*     <i class="fab fa-twitter"></i>   *@
+              @*     <i class="fab fa-google"></i>   *@
+              @* </div>   *@
+              <div>
+                  <a href="@Url.Action("ForgotPassword","Account")">Forget Password</a>
+              </div>
+          </div>  
+      </div>
+  </main>  
+  @Scripts.Render("~/bundles/lib")  
+  @Scripts.Render("~/bundles/app")  
+  @Scripts.Render("~/bundles/jqueryval")
+
+  </body>  
+  </html>  

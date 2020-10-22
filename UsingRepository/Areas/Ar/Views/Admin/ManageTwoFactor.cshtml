@@ -1,0 +1,27 @@
+﻿@model bool
+@{
+    ViewData["Title"] = "Manage Two Factor";
+}
+
+
+<h2 class="alert alert-info">إدارة المصادقة الثنائية</h2>
+
+@if (Model)
+{
+    <h2>المصادقة الثنائية ممكنة</h2>
+    <p>من أجل تعطيل المصادقة الثنائية يجب عليك الضغظ على الزر الموجود بالاسفل</p>
+    using (Html.BeginForm("DisableTwoFactorAuthentication", "Admin", FormMethod.Post))
+    {
+        <button class="btn btn-Black">تعطيل</button>
+    }
+}
+else
+{
+    <h2>المصادقة الثنائية معطلة</h2>
+    <p>من أجل تمكين المصادقة الثنائية يجب عليك الضغظ على الزر الموجود بالاسفل</p>
+   
+    using (Html.BeginForm("EnableTwoFactorAuthentication", "Admin", FormMethod.Post))
+    {
+        <button class="btn btn-Black">تمكين</button>
+    }
+}

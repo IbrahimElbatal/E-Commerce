@@ -1,0 +1,37 @@
+﻿@using System.Collections;
+@model IEnumerable<UsingRepository.Core.Models.ApplicationUser>
+@{
+    ViewBag.Title = "Users";
+}
+
+<h2 class="alert alert-info">كل اليوزرز</h2>
+
+<div class="row col-md-8">
+    @foreach (var user in Model)
+    {
+        <div class="panel panel-primary" style="overflow: hidden">
+            <div class="panel-heading">
+                @user.Id
+            </div>
+            <div class="panel-body">
+                اسم المستخدم : @user.UserName <br />
+                الايميل : @user.Email
+            </div>
+            <div class="panel-footer">
+                @Html.ActionLink("تعديل", "EditUser", new { userId = user.Id }, new { @class = "btn btn-primary" })
+                <input type="submit" class="btn btn-danger js-Delete" value="حذف"
+                       data-id="@user.Id" />
+            </div>
+        </div>
+    }
+</div>
+
+@section scripts
+{
+    <script>
+        $(document).ready(function () {
+            DeleteController.init('/api/user?userId=');
+        });
+    </script>
+
+}

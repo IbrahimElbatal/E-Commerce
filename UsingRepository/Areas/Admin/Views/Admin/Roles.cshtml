@@ -1,0 +1,40 @@
+﻿@using Microsoft.AspNet.Identity.EntityFramework
+@model IEnumerable<IdentityRole>
+@{
+    ViewBag.Title = "Roles";
+}
+
+<h2 class="alert alert-info">All Roles</h2>
+
+<p>
+    @Html.ActionLink("New Role", "RoleForm", new{roleId =" "}, new { @class = "btn btn-Black" })
+</p>
+<div id="roles" class="row col-md-8">
+    @foreach (var role in Model)
+    {
+        <div class="panel panel-primary" style="overflow: hidden">
+            <div class="panel-heading">
+                @role.Id
+            </div>
+            <div class="panel-body">
+                @role.Name
+            </div>
+            <div class="panel-footer">
+                @Html.ActionLink("Edit", "RoleForm", new { roleId = role.Id }, new { @class = "btn btn-primary" })
+                <input type="submit" class="btn btn-danger js-Delete" value="Delete"
+                       data-id="@role.Id"/>
+            </div>
+        </div>
+    }
+</div>
+
+
+@section scripts
+{
+    <script>
+        $(document).ready(function () {
+            DeleteController.init('/api/role?roleId=');
+        });
+    </script>
+    
+}

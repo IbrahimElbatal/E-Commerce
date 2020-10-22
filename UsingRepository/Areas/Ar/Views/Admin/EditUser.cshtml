@@ -1,0 +1,65 @@
+﻿@model UsingRepository.Areas.ViewModels.EditUserViewModel
+
+@{
+    ViewBag.Title ="Edit User";
+}
+
+<h2 class="alert alert-info">تعديل الصلاحية</h2>
+
+@using (Html.BeginForm())
+{
+
+    @Html.HiddenFor(m=>m.Id)
+    @Html.AntiForgeryToken()
+    @Html.ValidationSummary(true,"",new{@class="text-danger"})
+    <div class="form-group">
+        @Html.LabelFor(m => m.Id)
+            @Html.TextBoxFor(m => m.Id, new {@class = "form-control",disabled="disabled"})
+            @Html.ValidationMessageFor(r => r.Id, String.Empty, new {@class = "text-danger"})
+    </div>
+
+    <div class="form-group">
+        @Html.LabelFor(m => m.UserName)
+            @Html.TextBoxFor(m => m.UserName, new {@class = "form-control"})
+            @Html.ValidationMessageFor(r => r.UserName, String.Empty, new {@class = "text-danger"})
+    </div>
+    <div class="form-group">
+        @Html.LabelFor(m => m.Email)
+            @Html.TextBoxFor(m => m.Email, new {@class = "form-control"})
+            @Html.ValidationMessageFor(r => r.Email, String.Empty, new {@class = "text-danger"})
+    </div>
+    <div class="form-group">
+        <button type="submit" class="btn btn-Black">تعديل</button>
+        @Html.ActionLink("الغاء","Users",null,new{@class="btn btn-primary"})
+    </div>
+
+}
+
+    <div class="row col-md-8" style="padding: 0">
+        <div class="panel panel-primary" style="overflow: hidden">
+            <div class="panel-heading">
+                User Roles
+            </div>
+            <div class="panel-body">
+                @if (Model.Roles.Count == 0)
+                {
+                    @:فى الوقت الحالى لايوجد شىء
+                }
+                else
+                {
+                    foreach (var role in Model.Roles)
+                    {
+                        @role <br/>
+                    }
+                }
+            </div>
+            <div class="panel-footer">
+                @Html.ActionLink("إضافة أو حذف صلاحيات", "AddRolesToUser", new {userId =Model.Id }, new { @class = "btn btn-primary" })
+            </div>
+        </div>
+    </div>
+
+@section scripts
+{
+    @Scripts.Render("~/bundles/jqueryval");
+}

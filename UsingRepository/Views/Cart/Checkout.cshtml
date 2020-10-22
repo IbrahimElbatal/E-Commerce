@@ -1,0 +1,117 @@
+﻿@using Microsoft.AspNet.Identity
+@model dynamic
+
+@{
+    ViewBag.Title = "CheckOut";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<section class="header_text sub">
+    <img class="img-responsive" src="../../Content/themes/images/pageBanner.png" alt="New products">
+    <h4>
+        <span>Check Out</span>
+    </h4>
+</section>
+<section>
+    <div class="row" style="padding: 0 10px">
+       
+    <div class="col-xs-12 panel-group" id="accordion" role="tablist" aria-multiselectable="true">
+        <div class="panel panel-default">
+            <div class="panel-heading" role="tab" id="headingOne">
+                    <a id="anca" role="button" data-toggle="collapse" data-parent="#accordion" href="#collapseOne" aria-expanded="true" aria-controls="collapseOne">
+                       Checkout Options
+                    </a>
+            </div>
+            <div id="collapseOne" class="panel-collapse collapse in" role="tabpanel" aria-labelledby="headingOne">
+                <div class="panel-body">
+                    <div class="accordion-inner">
+                        <div class="row">
+                            <div class="col-xs-6">
+                                <h2>New Customer</h2>
+                                <p>By creating an account you will be able to shop faster, be up to date on an order's status, and keep track of the orders you have previously made.</p>
+                                <form action="#" method="post">
+                                    <fieldset>
+                                        <button id="btnShowBillingDetails" class="btn btn-danger" data-toggle="collapse" data-parent="#collapse2">Continue</button>
+                                    </fieldset>
+                                </form>
+                            </div>
+                            <div class="col-xs-6">
+                                <h2>Returning Customer</h2>
+                                <p>I am a returning customer</p>
+                                <form action="#" method="post">
+                                    <fieldset>
+                                        <div class="form-group">
+                                            <label class="control-label">Username</label>
+                                            <input type="text" name="userName" placeholder="Enter your username" value="@User.Identity.GetUserName()" id="username" class="form-control">
+                                        </div>
+                                       
+                                        <div class="form-group">
+@*                                            <button class="btn btn-Black" id="btnShowOrderConfirm">Continue</button>*@
+                                            <button id="btnShowOrderConfirm" class="btn btn-Black" data-toggle="collapse" data-parent="#collapse2">Continue</button>
+                                        </div>
+                                    </fieldset>
+                                </form>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div id="billingDetails" style="display: none" class="panel panel-default">
+            <div class="panel-heading" role="tab" id="headingTwo">
+                    <a id="triggerBillingDetails" class="collapsed" role="button" data-toggle="collapse" data-parent="#accordion" href="#collapseTwo" aria-expanded="false" aria-controls="collapseTwo">
+                        Account & Billing Details
+                    </a>
+            </div>
+            <div id="collapseTwo" class="panel-collapse collapse" role="tabpanel" aria-labelledby="headingTwo">
+                <div class="panel-body">
+                    <div class="accordion-inner">
+                        <div class="row">
+                           @Html.Partial("_customerDetails")
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="panel panel-default">
+            <div class="panel-heading" role="tab" id="headingThree">
+                    <a id="triggerOrderConfirm" class="collapsed" role="button" data-toggle="collapse" data-parent="#accordion" href="#collapseThree" aria-expanded="false" aria-controls="collapseThree">
+                        Confirm Order
+                    </a>
+            </div>
+            <div id="collapseThree" class="panel-collapse collapse" role="tabpanel" aria-labelledby="headingThree">
+                <div class="panel-body">
+                    <div class="accordion-inner">
+                        <div class="row">
+                            <div class="form-group col-xs-12">
+                                @using (Html.BeginForm("ConfirmOrder", "Cart"))
+                                {
+                                    <label for="textarea" class="control-label">Comments</label>
+                                    <textarea rows="3" id="textarea" name="comment" class="span12 form-control"></textarea>
+                                    <div style="margin-top: 10px; width: 100%">
+                                        @*                                        @Html.ActionLink("Confirm Order", "ConfirmOrder", "Cart", null, new {@class = "btn btn-Black pull-right", id = "finish"})*@
+                                        <input type="submit" value="Confirm Order" class="btn btn-Black pull-right" id="finish" />
+                                    </div>
+                                }
+                            </div>
+
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>        
+    </div>
+</section>
+@section scripts
+{
+    <script type="text/javascript">
+        $(document).ready(function() {
+           
+            CheckoutController.init();
+            SaveUserDetailsController.init('@User.Identity.GetUserId()');
+            CityCountryController.init();
+            CityCountryController.fillddlCityWithData();
+        });
+    </script>
+}

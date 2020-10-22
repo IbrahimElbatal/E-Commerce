@@ -1,0 +1,35 @@
+﻿@{
+    ViewBag.Title = "UserOrders";
+}
+
+<h2 class="alert alert-info">تفاصيل أوردرات العميل</h2>
+<table id="manageTable" class="table table-responsive table-hover table-bordered">
+    <thead>
+    <tr>
+        <th>تاريخ الأوردر</th>
+        <th>اسم المنتج</th>
+        <th>الكمية</th>
+        <th>التعليق</th>
+    </tr>
+    </thead>
+    <tbody>
+    @foreach (var orderDetail in Model)
+    {
+        <tr>
+            <td>@orderDetail.Order.OrderDate.ToLongDateString()</td>
+            <td>@orderDetail.Product.Name</td>
+            <td>@orderDetail.Quantity</td>
+            <td>@orderDetail.Comments</td>
+        </tr>
+
+    }
+    </tbody>
+</table>
+@section scripts
+{
+    <script type="text/javascript">
+        $(document).ready(function () {
+            $("#manageTable").DataTable();
+        });
+    </script>
+}

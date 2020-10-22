@@ -1,0 +1,65 @@
+﻿@model UsingRepository.Core.Models.Contact
+				
+	<section class="google_map">
+		<iframe height="300" width="100%" scrolling="no" marginheight="0" marginwidth="0" src="http://maps.google.com/maps?f=q&amp;source=s_q&amp;hl=en&amp;geocode=&amp;q=74%2F6+Nguy%E1%BB%85n+V%C4%83n+Tho%E1%BA%A1i,+S%C6%A1n+Tr%C3%A0,+%C4%90%C3%A0+N%E1%BA%B5ng,+Vi%E1%BB%87t+Nam&amp;aq=0&amp;oq=74%2F6+Nguyen+Van+Thoai+Da+Nang,+Viet+Nam&amp;sll=37.0625,-95.677068&amp;sspn=41.546728,79.013672&amp;ie=UTF8&amp;hq=&amp;hnear=74+Nguy%E1%BB%85n+V%C4%83n+Tho%E1%BA%A1i,+Ng%C5%A9+H%C3%A0nh+S%C6%A1n,+Da+Nang,+Vietnam&amp;t=m&amp;ll=16.064537,108.24151&amp;spn=0.032992,0.039396&amp;z=14&amp;iwloc=A&amp;output=embed"></iframe>
+	</section>
+	<section class="header_text sub">
+		<img class="" src="../../Content/themes/images/pageBanner.png" alt="New products" >
+		<h4><span>Contact Us</span></h4>
+	</section>
+<section style="font-family: cursive">
+	<div class="row">
+		<div class="col-md-5">
+			<div data-aos="fade-up" data-aos-delay="200">
+				<h5><strong>ADDITIONAL INFORMATION</strong></h5>
+				<p style="padding: 0 20px">
+					<strong>Phone:</strong>&nbsp;(123) 456-7890<br>
+					<strong>Fax:</strong>&nbsp;+04 (123) 456-7890<br>
+					<strong>Email:</strong>&nbsp;<a href="#">vietcuong_it@yahoo.com</a>
+				</p>
+				<br />
+				<h5><strong>SECONDARY OFFICE IN VIETNAM</strong></h5>
+				<p style="padding: 0 20px">
+					<strong>Phone:</strong>&nbsp;(113) 023-1125<br>
+					<strong>Fax:</strong>&nbsp;+04 (113) 023-1145<br>
+					<strong>Email:</strong>&nbsp;<a href="#">vietcuong_it@yahoo.com</a>
+				</p>
+			</div>
+		</div>
+        <div class="col-md-7">
+            <div data-aos="fade-up" data-aos-delay="300">
+                <p>Sed ut perspiciatis unde omnis iste natus error sit voluptatem accusantium doloremque laudantium, totam rem aperiam, eaque ipsa quae ab illo inventore veritatis et quasi architecto beatae vitae dicta sunt explicabo.</p>
+                @using (Html.BeginForm("SendMessage", "Home", FormMethod.Post))
+                {
+                    <div class="clearfix">
+                        @Html.LabelFor(model => model.Name, htmlAttributes: new { @class = "control-label" })
+                        @Html.EditorFor(model => model.Name, new { htmlAttributes = new { @class = "form-control" } })
+                        @Html.ValidationMessageFor(model => model.Name, "", new { @class = "text-danger" })
+                    </div>
+                    <div class="clearfix">
+                        @Html.LabelFor(model => model.EmailAddress, htmlAttributes: new { @class = "control-label" })
+                        @Html.EditorFor(model => model.EmailAddress, new { htmlAttributes = new { @class = "form-control" } })
+                        @Html.ValidationMessageFor(model => model.EmailAddress, "", new { @class = "text-danger" })
+                    </div>
+                    <div class="clearfix">
+                        @Html.LabelFor(model => model.Messsage, htmlAttributes: new { @class = "control-label" })
+                        @Html.TextAreaFor(model => model.Messsage, new { @class = "form-control", rows = 5, cols = 7 })
+                        @Html.ValidationMessageFor(model => model.Messsage, "", new { @class = "text-danger" })
+                    </div>
+                    <div class="">
+                        <input type="submit" value="Send Message" class="btn btn-Black" />
+                    </div>
+                }
+            </div>
+        </div>
+	</div>
+</section>
+@section scripts
+{
+	<script type="text/javascript">
+	 $(document).ready(function () {
+//		 CKEDITOR.replace('123');
+	 });
+ </script>
+}
+			

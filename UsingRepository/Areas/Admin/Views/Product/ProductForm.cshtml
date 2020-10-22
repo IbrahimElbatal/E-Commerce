@@ -1,0 +1,100 @@
+﻿@model UsingRepository.Core.ViewModels.ProductViewModel
+
+@{
+    ViewBag.Title = Model.Heading;
+}
+<h4 class="alert alert-info">@Model.Heading</h4>
+
+
+@using (Html.BeginForm(Model.Action, "Product", FormMethod.Post, new { enctype = "multipart/form-data" }))
+{
+    @Html.AntiForgeryToken()
+    @Html.HiddenFor(p => p.Id)
+@*     @Html.HiddenFor(p => p.AddedDate) *@
+    @Html.HiddenFor(p => p.RowVersion)
+
+    <div class="row">
+        <div class="form-horizontal ">
+            @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+            <div class="col-md-12">
+                <div class="form-group">
+                    @Html.LabelFor(model => model.Name, htmlAttributes: new { @class = "control-label" })
+                    @Html.EditorFor(model => model.Name, new { htmlAttributes = new { @class = "form-control", autofocus = "autofoucs" } })
+                    @Html.ValidationMessageFor(model => model.Name, "", new { @class = "text-danger" })
+                </div>
+
+                <div class="form-group">
+                    @Html.LabelFor(model => model.ImagePath, htmlAttributes: new { @class = "control-label" })
+                    @Html.EditorFor(model => model.ImagePath, null, "PostedImage", new { htmlAttributes = new { @class = "form-control", type = "file" } })
+                    @Html.ValidationMessageFor(model => model.ImagePath, "", new { @class = "text-danger" })
+                </div>
+                
+                @if (Model.Id != 0)
+                {
+                    <img src="@Url.Content(Model.ImagePath)" 
+                         class="img-responsive img-thumbnail"
+                         id="imgReader" />
+                }
+                else
+                {
+                    <img src="" style="display: none"
+                         class="img-responsive img-thumbnail"
+                         id="imgReader" />
+                }
+                <div class="form-group">
+                    @Html.LabelFor(model => model.Price, htmlAttributes: new { @class = "control-label" })
+                    @Html.EditorFor(model => model.Price, new { htmlAttributes = new { @class = "form-control" } })
+                    @Html.ValidationMessageFor(model => model.Price, "", new { @class = "text-danger" })
+                </div>
+
+                <div class="form-group">
+                    @Html.LabelFor(model => model.NumberInStock, htmlAttributes: new { @class = "control-label" })
+                    @Html.EditorFor(model => model.NumberInStock, new { htmlAttributes = new { @class = "form-control" } })
+                    @Html.ValidationMessageFor(model => model.NumberInStock, "", new { @class = "text-danger" })
+                </div>
+
+                <div class="form-group">
+                    @Html.LabelFor(model => model.AddedDate, htmlAttributes: new { @class = "control-label" })
+                    @Html.EditorFor(model => model.AddedDate, new { htmlAttributes = new { @class = "form-control" } })
+                    @Html.ValidationMessageFor(model => model.AddedDate, "", new { @class = "text-danger" })
+                </div>
+
+                <div class="form-group">
+                    @Html.LabelFor(model => model.CategoryId, "Category", htmlAttributes: new { @class = "control-label" })
+                    @Html.DropDownListFor(p => p.CategoryId, Model.Categories, "Select Category", new { @class = "form-control" })
+                    @Html.ValidationMessageFor(model => model.CategoryId, "", new { @class = "text-danger" })
+                </div>
+
+
+                <div class="form-group">
+                    @Html.LabelFor(model => model.Description, htmlAttributes: new {@class = "control-label"})
+                    @Html.TextAreaFor(model => model.Description, new {@class = "form-control", id = "123", rows = 5, cols = 10})
+
+                    @*                    @Html.TextAreaFor(p => p.Description, 7, 10, new { @class = "form-control" })*@
+                    @Html.ValidationMessageFor(model => model.Description, "", new {@class = "text-danger"})
+                </div>
+
+                <div class="form-group">
+                    <div class="">
+                        <input type="submit" value="Save" class="btn btn-Black" />
+                    </div>
+                </div>
+            </div>
+        </div>
+
+    </div>
+}
+
+<div>
+    @Html.ActionLink("Back to List", "Index", null, new { @class = "btn btn-Black btn-lg" })
+</div>
+
+@section Scripts {
+    @Scripts.Render("~/bundles/jqueryval")
+    <script type="text/javascript">
+        $(document).ready(function () {
+            ShowImageController.init("PostedImage");
+//            CKEDITOR.replace('123');
+        });
+    </script>
+}

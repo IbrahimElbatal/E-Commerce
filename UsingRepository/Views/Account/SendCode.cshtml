@@ -1,0 +1,23 @@
+﻿@model UsingRepository.Core.ViewModels.IdentityViewModels.SendCodeViewModel
+@{
+    ViewBag.Title = "Send";
+}
+
+<h2 class="alert alert-warning">Send verification code</h2>
+
+@using (Html.BeginForm("SendCode", "Account", new { Model.ReturnUrl }, FormMethod.Post, new { @class = "form-horizontal", role = "form" })) {
+    @Html.AntiForgeryToken()
+    @Html.Hidden("rememberMe", Model.RememberMe)
+    <hr />
+    <div class="form-group">
+        @Html.Label("Select Two-Factor Authentication Provider")
+        @Html.DropDownListFor(model => model.SelectedProvider, Model.Providers,new {@class="form-control"})
+    </div>
+    <div class="form-group">
+        <input type="submit" value="Submit" class="btn btn-Black" />
+    </div>
+}
+
+@section Scripts {
+    @Scripts.Render("~/bundles/jqueryval")
+}

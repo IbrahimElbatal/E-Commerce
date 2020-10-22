@@ -1,0 +1,128 @@
+﻿@model UsingRepository.Core.ViewModels.ProductViewModel
+
+@{
+    ViewBag.Title = "Home";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<section class="homepage-slider" id="home-slider">
+    <div class="flexslider">
+        <ul class="slides">
+
+            @foreach (var slider in Model.Sliders)
+            {
+                <li data-aos="fade-up" data-aos-delay="200">
+                    <img src="@Url.Content(slider.ImagePath)" alt="" />
+                    <div class="intro">
+                        <h1>@slider.Header</h1>
+                        <p>
+                            <span>@Html.Raw(slider.Paragraph)</span>
+                        </p>
+                    </div>
+                </li>
+            }
+        </ul>
+    </div>
+</section>
+<section class="header_text">
+    We stand for top quality templates. Our genuine developers always optimized bootstrap commercial templates.
+    <br />Don't miss to use our cheap abd best bootstrap templates.
+</section>
+
+
+<section>
+    <div class="row ">
+        <div class="span12 col-xs-12">
+            @Html.Partial("_FeatureProducts", Model.Products.OrderBy(p => p.AddedDate))
+            <br />
+            <br />
+            <br />
+            @Html.Partial("_LatestProducts", Model.Products.OrderByDescending(p => p.AddedDate))
+
+            <div class="row feature_box">
+                <h4 class="title" style="padding-left: 5px">
+                    <span class="text">Our<strong>Services</strong></span>
+                </h4>
+                <div class="container">
+                    <div class="col-sm-12 col-md-4" data-aos="fade-right" data-aos-delay="100">
+                        <div class="service text-center">
+                            <div>
+                                <img src="../../Content/themes/images/feature_img_2.png" class="img-responsive pagination" alt=""/>
+                                <h4>MODERN <strong>DESIGN</strong></h4>
+                                <p>Lorem Ipsum is simply dummy text of the printing and printing industry unknown printer.</p>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-sm-12 col-md-4" data-aos="fade-up" data-aos-delay="200">
+                        <div class="service text-center">
+                            <div class="customize">
+                                <img src="../../Content/themes/images/feature_img_1.png" class="img-responsive pagination" alt=""/>
+                                <h4>FREE <strong>SHIPPING</strong></h4>
+                                <p>Lorem Ipsum is simply dummy text of the printing and printing industry unknown printer.</p>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-sm-12 col-md-4">
+                        <div class="service text-center" data-aos="fade-left" data-aos-delay="300">
+                            <div class="support">
+                                <img src="../../Content/themes/images/feature_img_3.png" class="img-responsive pagination" alt=""/>
+                                <h4>24/7 LIVE <strong>SUPPORT</strong></h4>
+                                <p>Lorem Ipsum is simply dummy text of the printing and printing industry unknown printer.</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+<section class="our_client">
+    <h4 class="title" style="padding-left: 5px">
+        <span class="text">Manu<strong>factures</strong></span>
+    </h4>
+    <div class="container">
+        <div class="text-center" style="padding-top: 20px">
+            <div class="col-md-3 col-sm-4 col-xs-12" data-aos="flip-up" data-aos-delay="100">
+                <a href="#">
+                    <img alt="" src="../../Content/themes/images/clients/14.png" class="img-responsive">
+                </a>
+            </div>
+            <div class="col-md-3 col-sm-4 col-xs-12" data-aos="flip-up" data-aos-delay="200">
+                <a href="#">
+                    <img alt="" src="../../Content/themes/images/clients/35.png" class="img-responsive">
+                </a>
+            </div>
+            <div class="col-md-3 col-sm-4 col-xs-12" data-aos="flip-up" data-aos-delay="300">
+                <a href="#">
+                    <img alt="" src="../../Content/themes/images/clients/1.png" class="img-responsive">
+                </a>
+            </div>
+            <div class="col-md-3 col-sm-4 col-xs-12" data-aos="flip-up" data-aos-delay="400">
+                <a href="#">
+                    <img alt="" src="../../Content/themes/images/clients/2.png" class="img-responsive">
+                </a>
+            </div>
+            <div class="col-md-3 col-sm-4 col-xs-12" data-aos="flip-up" data-aos-delay="100">
+                <a href="#">
+                    <img alt="" src="../../Content/themes/images/clients/3.png" class="img-responsive">
+                </a>
+            </div>
+            <div class="col-md-3 col-sm-4 col-xs-12" data-aos="flip-up" data-aos-delay="200">
+                <a href="#">
+                    <img alt="" src="../../Content/themes/images/clients/4.png" class="img-responsive">
+                </a>
+            </div>
+            <div class="col-md-3 col-sm-4 col-xs-12" data-aos="flip-up" data-aos-delay="300">
+                <a href="#">
+                    <img alt="" src="../../Content/themes/images/clients/logo6.png" class="img-responsive">
+                </a>
+            </div>
+            <div class="col-md-3 col-sm-4 col-xs-12" data-aos="flip-up" data-aos-delay="400">
+                <a href="#">
+                    <img alt="" src="../../Content/themes/images/clients/logo7.png" class="img-responsive">
+                </a>
+            </div>
+        </div>
+
+    </div>
+</section>

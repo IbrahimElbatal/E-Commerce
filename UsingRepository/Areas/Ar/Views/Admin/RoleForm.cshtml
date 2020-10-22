@@ -1,0 +1,64 @@
+﻿@model UsingRepository.Areas.ViewModels.RoleViewModel
+
+@{
+    var title = "اضافة";
+    var text = "اضافة";
+    if (Model!=null && string.IsNullOrWhiteSpace(Model.Id))
+    {
+        title = "تعديل";
+        text = "تعديل";
+    }
+    ViewBag.Title = title+" صلاحية";
+}
+
+<h2 class="alert alert-info">@title صلاحية</h2>
+
+@using (Html.BeginForm())
+{
+    @Html.HiddenFor(r=>r.Id)
+    @Html.AntiForgeryToken()
+    <div class="form-group">
+        @Html.LabelFor(r=>r.Name)
+        @Html.TextBoxFor(r=>r.Name,new{@class="form-control"})
+        @Html.ValidationMessageFor(r=>r.Name,String.Empty,new{@class="text-danger"})
+    </div>
+
+    <div class="form-group">
+        <button type="submit" class="btn btn-Black">@text</button>
+        @Html.ActionLink("الغاء","Roles",null,new{@class="btn btn-primary"})
+    </div>
+
+}
+
+@if (Model != null)
+{
+    
+    <div class="row col-md-8" style="padding: 0">
+        <div class="panel panel-primary" style="overflow: hidden">
+                <div class="panel-heading">
+                    Users In This Role
+                </div>
+                <div class="panel-body">
+                    @if (Model.Users.Count == 0)
+                    {
+                        @:لا يوجد شىء فى الوقت الحالى
+                    }
+                    else
+                    {
+                        foreach (var user in Model.Users)
+                        {
+                            @user.Email <br/>
+                        }
+                    }
+                </div>
+                <div class="panel-footer">
+                    @Html.ActionLink("إضافة أو حذف مستخدمين", "AddUsersToRole", new {roleId =Model.Id }, new { @class = "btn btn-primary" })
+                </div>
+            </div>
+    </div>
+}
+
+@section scripts
+{
+    @Scripts.Render("~/bundles/jqueryval");
+}

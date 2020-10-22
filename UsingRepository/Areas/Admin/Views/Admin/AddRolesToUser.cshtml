@@ -1,0 +1,38 @@
+﻿@using System.Collections.Generic
+@model List<UsingRepository.Areas.ViewModels.UserRolesViewModel>
+
+@{
+    ViewBag.Title = "Manage Users";
+    var userId = ViewBag.UserId;
+}
+
+<h2 class="alert alert-info">Manage User Roles</h2>
+
+@using (Html.BeginForm())
+{
+    @Html.Hidden("roleId")
+    <div class="row col-md-8">
+        <div class="panel panel-primary" style="overflow: hidden">
+            <div class="panel-heading">
+                Manage User Roles
+            </div>
+            <div class="panel-body">
+
+                @for (int i = 0; i < Model.Count; i++)
+                {
+                    @Html.HiddenFor(m => Model[i].RoleId)
+                    @Html.HiddenFor(m => Model[i].RoleName)
+                    <div class="checkbox">
+                        <label>
+                            @Html.CheckBoxFor(ur => Model[i].IsSelected) @Model[i].RoleName
+                        </label>
+                    </div>
+                }
+            </div>
+            <div class="panel-footer">
+                <button type="submit" class="btn btn-Black">Update</button>
+                @Html.ActionLink("Cancel", "EditUser", new { userId = userId }, new { @class = "btn btn-primary" })
+            </div>
+        </div>
+    </div>
+}

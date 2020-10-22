@@ -1,0 +1,48 @@
+﻿@model IEnumerable<UsingRepository.Core.Models.Product>
+<div class="row">
+    <div class="span12 col-xs-12">
+        <h4 class="title">
+            <span class="pull-left">
+                <span class="text">
+                    <span class="line">Latest <strong>Products</strong></span>
+                </span>
+            </span>
+        </h4>
+
+        <div class="thumbnails owl-carousel owl-theme product-slider">
+            @{ var delay = 0;}
+            @foreach (var product in Model)
+            {
+                var effect = "";
+                delay += 100;
+                if (delay > 400)
+                {
+                    delay = 100;
+
+                }
+                if (delay == 100 || delay == 300)
+                {
+                    effect = "fade-up-right";
+                }
+                else
+                {
+                    effect = "fade-up-left";
+                }
+                <div class="product-box" data-aos="@effect" data-aos-delay="@delay">
+                    @Html.Hidden("Id", product.Id)
+                        <p style="overflow: hidden">
+                            <a href="@Url.Action("Details", "Products", new {id = 1})">
+                                <img src="@Url.Content(product.ImagePath)" class="img-responsive" />
+                            </a>
+                        </p>
+                        <div class="text-center" style="padding: 0 10px">
+                            @Html.ActionLink("this is very Good", "Details", "Products", new { id = product.Id }, new { @class = "title" })<br />
+                            <button type="button" data-product-id="@product.Id" class="btnAddToCart">Add to cart</button>
+                            <p class="price">$@product.Price</p>
+                        </div>
+                    </div>
+                    }
+                </div>
+
+            </div>
+</div>

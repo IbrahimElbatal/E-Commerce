@@ -1,0 +1,48 @@
+﻿
+@model UsingRepository.Core.ViewModels.ProductViewModel
+<div class="block" data-aos="fade-up-left" data-aos-delay="300">
+    <h4 class="title" style="background: none; display: inline-block;margin-block-end: auto">
+        <span class="pull-left">
+            <span class="text"><span style="color: #eb4800">Rand</span>omize</span>
+        </span>
+        <span class="pull-right">
+            <a class="left button" href="#myCarousel1" data-slide="prev"></a>
+            <a class="right button" href="#myCarousel1" data-slide="next"></a>
+        </span>
+    </h4>
+    <div id="myCarousel1" class="myCarousel carousel slide">
+        <div class="carousel-inner">
+            @for (var i = 0; i < Model.RandomProducts.Count(); i++)
+            {
+                var str = "";
+                if (i == 0)
+                {
+                    str = "active";
+                }
+                <div class="item @str">
+                    <div class="thumbnails">
+                        @{
+                            var products = Model.RandomProducts.Skip(i).Take(1);
+                            foreach (var product in products)
+                            {
+                                <div class="col-xs-12" style="padding: 0">
+                                    <div class="product-box" style="width: 95%">
+                                        @Html.Hidden("Id", product.Id)
+                                        <p style="overflow: hidden">
+                                            <a href="@Url.Action("Details", "Products", new {id = product.Id})">
+                                                <img src="@Url.Content(product.ImagePath)" class="img-responsive" style="width: 100%" alt="" />
+                                            </a>
+                                        </p>
+                                        @Html.ActionLink(product.Name, "Details", "Products", new { id = product.Id }, new { @class = "title" })<br />
+                                        <p class="price">$@product.Price</p>
+                                    </div>
+                                </div>
+                            }
+                        }
+                    </div>
+
+                </div>
+            }
+        </div>
+    </div>
+</div>

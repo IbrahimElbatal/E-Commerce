@@ -1,0 +1,177 @@
+﻿* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box
+}
+
+body {
+    background: whitesmoke;
+    width: 100%;
+    font-family: "abel"
+}
+
+.wrapper {
+    margin: 5% auto;
+    background: white;
+    width: 70%;
+    padding: 5rem;
+    border-radius: 30px
+}
+
+.login {
+    display: grid;
+    grid-template-columns: repeat(2, 50%);
+}
+
+.log-left {
+    padding-top: 20px
+}
+
+    .log-left img {
+        width: 100%;
+        height: 100%;
+        max-width: 322px;
+        max-height: 312px
+    }
+
+.log-right {
+    padding-left:2rem
+}
+
+    .log-right h2 {
+        font-size: 22px;
+        font-weight: 700;
+        margin-bottom: 3rem;
+        font-family: 'anton'
+    }
+
+    .log-right div {
+        margin-bottom: 2rem
+    }
+
+        .log-right div > input:not([type="checkbox"]) {
+            border: none;
+            border-bottom: 1px solid #ccc;
+            padding: 10px;
+            outline: none;
+        }
+
+        .log-right div > input::placeholder {
+            color: #ccc
+        }
+
+input[type="checkbox"] {
+    -webkit-appearance: none;
+    width: 17px;
+    height: 17px;
+    border: 1px solid #ddd;
+    vertical-align: middle;
+}
+
+    input[type="checkbox"]:focus {
+        outline: none
+    }
+
+    input[type="checkbox"]:checked {
+        background: black
+    }
+
+    input[type="checkbox"] + span {
+        vertical-align: middle;
+        margin-left: 10px
+    }
+
+button {
+    padding: 5px 15px;
+    background: #428bca;
+    font-size: 18px;
+    outline: none;
+    margin-top: 20px;
+    color: white;
+}
+
+.bottom {
+    display: flex;
+    justify-content: space-around;
+    margin-top: 2rem
+}
+
+    .bottom > div i {
+        padding: 0 6px;
+        font-size: 20px
+    }
+
+        .bottom > div i:hover {
+            color: white;
+            padding: 3px;
+            background: #428bca;
+            cursor: pointer
+        }
+
+    .bottom a {
+        color: black;
+        text-decoration: underline
+    }
+        .bottom a:hover,
+        .bottom a:active {
+            color: #eb4800;
+        }
+
+input[type="text"],input[type="password"] {
+    display: block
+}
+span.text-danger.field-validation-error {
+    display: block;
+    text-align: left
+}
+    @media only screen and (max-width:850px) {
+        .log-right {
+            /* padding: 0 2rem 0 4rem; */
+            padding-left: 2rem;
+            overflow: hidden;
+        }
+    }
+    @media only screen and (max-width:700px) {
+        
+        /*error*/
+        .login {
+            display: grid;
+            grid-template-columns: 100%;
+            text-align: center
+        }
+        .log-left {
+            display: none;
+        }
+        .remember-me {
+            text-align: left;
+            padding: 0.5rem 3.5rem;
+        }
+        button {
+            width: 70%;
+            margin: 0 15%;
+        }
+    }
+    @media only screen and (max-width:620px) {
+        .remember-me {
+            padding-left: 1rem;
+            padding-right: 0
+        }
+        .bottom {
+            flex-flow: column
+        }
+        .bottom div:first-child {
+            margin-bottom: 1.5rem
+        }
+    }
+@media only screen and (max-width:500px) {
+    .log-right {
+        padding: 0
+    }
+    .remember-me {
+        padding-left: 2rem;
+    }
+    .wrapper {
+        padding: 5rem 3rem;
+    }
+  
+}

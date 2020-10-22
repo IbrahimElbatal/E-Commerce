@@ -1,0 +1,14 @@
+﻿@model UsingRepository.Core.ViewModels.ProductViewModel
+@foreach (var item in Model.CategoryList)
+{
+    var active = "";
+    if (Request.QueryString["category"]==item.Name)
+    {
+        active = "active";
+    }
+    <li class=@active>
+        <a href="@Url.Action("AllProducts", "Products", new {category = item.Name})">@item.Name</a>
+    </li>
+}
+
+

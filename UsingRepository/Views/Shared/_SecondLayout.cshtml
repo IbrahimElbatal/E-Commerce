@@ -1,0 +1,267 @@
+﻿@model UsingRepository.Core.ViewModels.ProductViewModel
+@using Microsoft.AspNet.Identity
+@using UsingRepository.Core.ViewModels
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <title>@ViewBag.Title - Developed By Hero</title>
+    <link rel="icon" type="image/x-icon" href="@Url.Content("~/favicon.png")" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="">
+
+    @Styles.Render("~/Content/css")
+    @Scripts.Render("~/bundles/modernizr")
+</head>
+<body>
+    <div style="overflow-x: hidden">
+        <div id="top-bar" class="container">
+            <div class="left">
+                @using (Html.BeginForm("AllProducts", "Products", null, FormMethod.Get, new {@class = "form-inline", id = "frmSubmit"}))
+                {
+                    <div class="">
+                        <div class="form-group" style="width: 300px;margin: 0">
+                            <div id="Search1" style="display: inline-block; width: 100%">
+                                <input type="text" style="width: 100%" id="search" name="search" class="form-control" Placeholder="eg. T-sirt"><!--class typeahead-->
+                            </div>
+                        </div>
+
+                    </div>
+                }
+            </div>
+            <div class="right">
+                <div class="account pull-right">
+                    <ul class="user-menu">
+                        @if (User.Identity.IsAuthenticated)
+                        {
+                            <li>
+                                <a href="@Url.Action("Index", "Admin",new{area="Admin"})">
+                                    <span class="glyphicon glyphicon-user"></span> @User.Identity.GetUserName()
+                                </a>
+                            </li>
+                        }
+                        <li>
+                            @if (User.Identity.IsAuthenticated)
+                            {
+                                <a href="@Url.Action("LogOff", "Account")"><span class="glyphicon glyphicon-log-in"></span> LogOff</a>
+                            }
+                            else
+                            {
+                                <a href="@Url.Action("Login", "Account")"><span class="glyphicon glyphicon-log-out"></span> Login</a>
+                            }
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+        <div id="wrapper" class="container body-content">
+            <section class="navbar main-menu">
+                <div class="navbar-inner main-menu">
+                    <a href="@Url.Action("HomePage", "Products")" class="logo pull-left">
+                        <img src="../../Content/themes/images/logo.png" class="site_logo" alt="">
+                    </a>
+                    <nav id="menu" class="pull-right">
+                        <ul>
+
+                            @{
+                                var cart = Session["cart"] as List<CartViewModel>;
+                                var quantity = cart?.Sum(c => c.Quantity) ?? 0;
+                                <li style="position: relative">
+                                    <a href="@Url.Action("Index", "Cart")">
+                                        <i class="fas fa-cart-plus fa-2x"></i>
+                                        <span class="badge badge-place">@quantity</span>
+                                    </a>
+                                </li>
+                            }
+                            @if (User.Identity.IsAuthenticated)
+                            {
+                                <li>
+                                    <a href="#">Manage</a>
+                                    <ul>
+                                        <li>
+                                            @Html.ActionLink("Cart", "Index", "Cart")
+                                        </li>
+                                        <li>
+                                            @Html.ActionLink("User Login Orders", "Index", "Manage")
+                                        </li>
+                                    </ul>
+                                </li>
+
+                            }
+                            <li>
+                                @Html.ActionLink("Products", "AllProducts", "Products")
+                            </li>
+                            <li>
+                                <a href="@Url.Action("BestSeller", "Products")">Best Seller</a>
+                            </li>
+                            <li>
+                                <a href="@Url.Action("TopSeller", "Products")">Top Seller</a>
+                            </li>
+                            <li>
+                                @Html.ActionLink("Contact Us", "About", "Home")
+                            </li>
+                        </ul>
+                    </nav>
+                    <div class="nav-icons">
+                        <span><i class="fas fa-bars"></i></span>
+                    </div>
+                </div>
+            </section>
+            <section class="header_text sub">
+                <img class="" src="../../Content/themes/images/pageBanner.png" alt="New products">
+                @* <img class="" src="../../Content/Images/shopping 1.jpeg" alt="New products"> *@
+                <h4>
+                    <span>Product Detail</span>
+                </h4>
+            </section>
+
+
+            <section>
+                <div class="row">
+                    <div class="col-sm-8">
+                        @RenderBody()
+                    </div>
+                    <div class="col-sm-4 second-layout-sidebar" style="padding: 0 25px 0 0">
+                        <div class="block" data-aos="fade-up-left" data-aos-delay="200">
+                            <ul class="nav nav-list">
+                                <li class="nav-header"
+                                    style="font-weight: bold; padding: 13px 10px 10px">
+                                    <span style="color: #eb4800">Categ</span>ories
+                                </li>
+                                @Html.Partial("_GetCategories")
+                            </ul>
+
+                        </div>
+                        @Html.Partial("_RandomProduct")
+                        <div class="block" data-aos="fade-up-left" data-aos-delay="400">
+                            <h4 class="title"
+                                style="background:none;text-align: left; padding: 13px 10px 10px; text-transform: capitalize; font-size: 17px; font-weight: 600;">
+                                <strong>Best</strong> Seller
+                            </h4>
+
+                            <ul class="media-list">
+                                @foreach (var product in Model.GetTop3BestSeller)
+                                {
+                                    <li class="media">
+
+                                        <a href="@Url.Action("Details","Products",new {id=product.Id})" title="@product.Name">
+
+                                            <div class="pull-left">
+                                                @* <a href="@Url.Action("Details","Products",new {id=product.Id})" title="@product.Name"> *@
+                                                <img src="@Url.Content(product.ImagePath)" width="65" class="media-object" alt="Praesent tempor sem sodales">
+                                                @* </a> *@
+                                            </div>
+                                            <div class="media-body">
+                                                <h2 class="media-heading" style="text-align: left">
+                                                    @* <a href="@Url.Action("Details", "Products", new {id = product.Id})">@product.Name</a> *@
+                                                    @product.Name
+                                                </h2>
+                                            </div>
+                                        </a>
+
+                                    </li>
+
+                                }
+                            </ul>
+
+
+
+                            @*                    <ul class="list-group">*@
+                            @*                        @foreach (var product in Model.GetTop3BestSeller)*@
+                            @*                        {*@
+                            @*                            <li style="border: none" class="list-group-item">*@
+                            @*                                <a href="@Url.Action("Details","Products",new {id=product.Id})" title="@product.Name">*@
+                            @*                                    <img src="@Url.Content(product.ImagePath)" width="65" class="img-responsive" alt="Praesent tempor sem sodales">*@
+                            @*                                </a>*@
+                            @*                                <a href="@Url.Action("Details","Products",new {id=product.Id})">Product is :@product.Name</a>*@
+                            @*                            </li>*@
+                            @*                        }*@
+                            @*                        <li class="list-group-item">*@
+                            @*                            <a href="#" title="Luctus quam ultrices rutrum">*@
+                            @*                                <img src="../../themes/images/ladies/2.jpg" width="65" class="img-responsive" alt="Luctus quam ultrices rutrum">*@
+                            @*                            </a>*@
+                            @*                            <a href="#">Luctus quam ultrices rutrum</a>*@
+                            @*                        </li>*@
+                            @*                    </ul>*@
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <section id="footer-bar">
+                <div class="row">
+                    <div class="col-md-3 col-sm-6 col-xs-12">
+                        <div data-aos="fade-right" data-aos-delay="100">
+                            <h2>About Us</h2>
+                            <p>Lorem Ipsum is simply dummy text of the printing and typesetting industry. the Lorem Ipsum has been the industry's standard dummy text ever since the you</p>
+                        </div>
+                    </div>
+                    <div class="col-md-3 col-sm-6 col-xs-12">
+                        <div data-aos="fade-right" data-aos-delay="200">
+                            <h2>Newsletter</h2>
+                            <p>Stay update with our latest</p>
+                            <div class="form-element">
+                                <input type="text" placeholder="Email">
+                                <span>
+                                    <i class="fas fa-chevron-right"></i>
+                                </span>
+                            </div>
+                        </div>
+
+                    </div>
+                    <div class="col-md-3 col-sm-6 col-xs-12">
+                        <div data-aos="fade-left" data-aos-delay="300">
+                            <h2>Instagram</h2>
+                            <div class="flex-row">
+                                <img src="~/Content/instagram/thumb-card3.png" alt="insta1">
+                                <img src="~/Content/instagram/thumb-card4.png" alt="insta2">
+                                <img src="~/Content/instagram/thumb-card5.png" alt="insta3">
+                            </div>
+                            <div class="flex-row">
+                                <img src="~/Content/instagram/thumb-card6.png" alt="insta4">
+                                <img src="~/Content/instagram/thumb-card7.png" alt="insta5">
+                                <img src="~/Content/instagram/thumb-card8.png" alt="insta6">
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-3 col-sm-6 col-xs-12">
+                        <div data-aos="fade-left" data-aos-delay="400">
+                            <h2>Follow</h2>
+                            <p>let us be social</p>
+                            <div class="icons">
+                                <i class="fab fa-facebook-f"></i>
+                                <i class="fab fa-twitter"></i>
+                                <i class="fab fa-instagram"></i>
+                                <i class="fab fa-youtube"></i>
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
+            </section>
+            <section id="copyright" class="text-center">
+                <span>Copyright 2013 bootstrap page template All right reserved.</span>
+            </section>
+        </div>
+        <div id="topcontrol" title="Scroll Back to Top" style="bottom: 12px; cursor: pointer; opacity: 1; position: fixed; right: 0;">
+            <img id="imgflexslider" src="../../Content/themes/images/gotop.png" style="display: none; height: 40px; margin-right: 17px; margin-top: 25px; width: 40px;">
+        </div>
+        @Scripts.Render("~/bundles/lib")
+        @Scripts.Render("~/bundles/app")
+        @RenderSection("scripts", false)
+        <script>
+            $(document).ready(function () {
+                $('#search').keyup(function (e) {
+                    if (e.keyCode === 13) {
+                        $('#frmSubmit').submit();
+                    }
+                });
+            });
+        </script>
+    </div>
+</body>
+
+</html>
+
+

@@ -1,0 +1,62 @@
+﻿@using UsingRepository.Core.Models
+@model UsingRepository.Core.ViewModels.ProductViewModel
+
+@{
+    ViewBag.Title = "title";
+    Layout = "~/Views/Shared/_SecondLayout.cshtml";
+
+    var discount = 0.0f;
+    var productDiscounts = ViewBag.Discount as IEnumerable<ProductDiscount>;
+}
+
+<h2 class="alert alert-warning">@Model.Heading</h2>
+
+
+
+<div class="second-layout">
+    <div class="row active item thumbnails">
+        <div style="margin-left: 10px">
+            @foreach (var product in Model.Products)
+            {
+                if (productDiscounts != null)
+                {
+                    foreach (var pDiscount in productDiscounts)
+                    {
+                        if (pDiscount.ProductId == product.Id)
+                        {
+                            discount = pDiscount.Discount;
+                        }
+                    }
+                }
+
+                <div class="col-xs-6 col-sm-6 col-md-6 col-lg-4">
+                    <div class="product-box" data-aos="fade-down-right" data-aos-delay="200">
+                        @Html.Hidden("Id", product.Id)
+                        <p>
+                            <a href="@Url.Action("Details", "Products", new {id = product.Id})">
+                                <img src="@Url.Content(product.ImagePath)" class="img-responsive" alt="" />
+                                @if (Math.Abs(discount) > 0)
+                                {
+                                    <span style="margin-top: 30px" class="badge">ProductDiscount @discount%</span>
+                                }
+                            </a>
+                        </p>
+                        @Html.ActionLink(product.Name, "Details", "Products", new { id = product.Id }, new { @class = "title" })<br />
+                        <button type="button" data-product-id="@product.Id" class="btnAddToCart">Add to cart</button>
+                        <p class="price">$@product.Price</p>
+                    </div>
+                </div>
+            }
+        </div>
+    </div>
+</div>
+
+@section scripts
+{
+    <script type="text/javascript">
+        $(document).ready(function () {
+            CartAddController.add();
+        });
+    </script>
+}
+
